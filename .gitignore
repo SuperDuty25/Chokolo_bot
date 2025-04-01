@@ -1,0 +1,18 @@
+# Archivos sensibles
+.env
+
+# Archivos de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Entornos virtuales
+venv/
+.venv/
+
+# OneDrive/Windows
+Thumbs.db
+.DS_Store
+
+# Backup local de productos (opcional)
+coes_bot_data/
