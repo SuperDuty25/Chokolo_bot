@@ -1,27 +1,58 @@
-# 🤖 Chokolo_bot - Bot de Telegram para Chokolo Sneakers
+# 🤖 Bot de Telegram para Coes Sneakers
 
-Bot oficial de gestión de pedidos y consultas para Chokolo Sneakers.
+Bot oficial para la gestión de productos, precios y tallas en los grupos de Coes Sneakers. Incluye integración con Flask para despliegue en Render.
 
-## 🚀 Requisitos
-- Python 3.8 o superior
-- Librerías: Ver `requirements.txt`
+## ✨ Funcionalidades principales
+- Registro de productos (modelo, tallas, precio) mediante fotos + descripción
+- Comandos rápidos (`/price`, `/size`, `/buscar`)
+- Mensajes de bienvenida/despedida automáticos
+- Persistencia de datos en JSON
+- **Nuevo**: Servidor web integrado (Flask) para compatibilidad con Render
 
-## ⚙️ Configuración
-1. Clona el repositorio:
-   ```bash
-   git clone https://github.com/SuperDuty25/Chokolo_bot.git
+## 🛠️ Tecnologías utilizadas
+- Python 3.10+
+- [python-telegram-bot](https://python-telegram-bot.org/) (v20.6)
+- Flask (v3.0.0)
+- Render (para despliegue)
 
-   Instala las dependencias:
-   pip install -r requirements.txt
+## 📦 Estructura del proyecto
+├── chokolo_bot.py # Script principal del bot
+├── requirements.txt # Dependencias (optimizadas)
+├── .env # Variables de entorno (ejemplo)
+├── carpeta/ # Datos persistentes
+│ ├── nombre.json # Base de datos de productos
+│ └── backups/ # Copias de seguridad
+└── README.md # Este archivo
 
-   Configura las variables de entorno en .env (ej: token de Telegram).
+## 🚀 Despliegue en Render
+1. **Conectar repositorio** de GitHub a Render
+2. **Configurar variables de entorno**:
+   - `TELEGRAM_BOT_TOKEN`: Tu token de BotFather
+   - `PORT`: 10000 (Render lo inyecta automáticamente)
+3. **Especificar comandos**:
+   - Build Command: `pip install -r requirements.txt`
+   - Start Command: `python chokolo_bot.py`
 
-   🏃 Uso
+## 🔄 Actualizaciones recientes
+### v1.1 - Integración con Flask
+- ✅ Añadido servidor web Flask (escucha en `0.0.0.0:$PORT`)
+- ✅ Nuevo endpoint `/` para verificación de estado
+- ✅ Compatibilidad con pings de Render
+- ✅ Optimización de dependencias (`requirements.txt`)
 
-   Ejecuta el bot:
-   python chokolo_bot.py
+## 📌 Comandos disponibles
+| Comando       | Descripción                          | Ejemplo               |
+|---------------|--------------------------------------|-----------------------|
+| `/price`      | Muestra lista de precios            | `/price`              |
+| `/size`       | Muestra guía de tallas              | `/size`               |
+| `/buscar`     | Busca productos                     | `/buscar Air Force 1` |
+| `/eliminar`   | Elimina un producto (admin)         | `/eliminar Nike 10.5` |
 
-   📌 Contacto
-Desarrollador: @SuperDuty25
+## 🌐 Endpoints web
+- `GET /` → Verifica estado del bot (`{"status": "ok"}`)
+- `POST /webhook` → (Reservado para futuras integraciones)
 
-Empresa: Chokolo Sneakers
+---
+
+> **Nota**: Los administradores pueden registrar productos enviando una foto + descripción con formato:  
+> `Modelo\nTalla X - $Precio`
