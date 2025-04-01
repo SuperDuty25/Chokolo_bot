@@ -13,6 +13,24 @@ from telegram.ext import (
     filters
 )
 from dotenv import load_dotenv
+from flask import Flask, request, jsonify  # Nuevas importaciones
+
+# =============================================
+# CONFIGURACIÓN DE FLASK
+# =============================================
+flask_app = Flask(__name__)  # Cambiado de 'app' a 'flask_app'
+
+@flask_app.route('/')
+def home():
+    return jsonify({"status": "ok", "message": "Coes Sneakers Bot is running"})
+
+@flask_app.route('/webhook', methods=['POST'])
+def webhook():
+    return jsonify({"status": "ok"})
+
+def run_flask():
+    port = int(os.environ.get('PORT', 5000))
+    flask_app.run(host='0.0.0.0', port=port)
 
 # =============================================
 # CONFIGURACIÓN BÁSICA DEL BOT
@@ -531,6 +549,7 @@ def main():
         print("🔄 Iniciando bot...")
         print(f"📦 Productos cargados: {len(productos_db)}")
         
+        # Configurar el bot de Telegram
         app = ApplicationBuilder().token(TOKEN).build()
 
         # Handlers para eventos
@@ -559,6 +578,14 @@ def main():
 
         logger.info("Bot iniciado correctamente")
         print(f"✅ Bot de Coes Sneakers listo | Web: {SITIO_WEB}")
+
+        # Iniciar Flask en un hilo separado
+        import threading
+        flask_thread = threading.Thread(target=run_flask)
+        flask_thread.daemon = True
+        flask_thread.start()
+
+        # Iniciar el bot de Telegram
         app.run_polling()
 
     except Exception as e:
